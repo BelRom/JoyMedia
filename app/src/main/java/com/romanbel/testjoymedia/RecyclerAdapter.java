@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.romanbel.testjoymedia.model.Shop;
+
 import java.util.List;
 
 /**
@@ -16,14 +18,14 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private static List<String> mList;
+    private static List<Shop> mList;
     private static Context mContext;
 
     public Context getContext() {
         return mContext;
     }
 
-    public RecyclerAdapter(List<String> list, Context context) {
+    public RecyclerAdapter(List<Shop> list, Context context) {
         mList = list;
         mContext = context;
     }
@@ -42,8 +44,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        TextView firstItemColumn = holder.mFirstItemColumn;
-        firstItemColumn.setText(mList.get(position));
+        TextView name = holder.mTxtName;
+        name.setText(mList.get(position).getName());
+        TextView address = holder.mTxtAddress;
+        address.setText(mList.get(position).getAddress());
+        TextView hours = holder.mTxtHours;
+        hours.setText(mList.get(position).getOpeningHours());
+        TextView distance = holder.mTxtDistance;
+        distance.setText(mList.get(position).getDistance().toString());
 
     }
 
@@ -55,15 +63,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mFirstItemColumn;
+        private TextView mTxtName, mTxtAddress, mTxtHours, mTxtDistance;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mFirstItemColumn = (TextView) itemView.findViewById(R.id.txt_name);
+            mTxtName = (TextView) itemView.findViewById(R.id.txt_name);
+            mTxtAddress = itemView.findViewById(R.id.txt_address);
+            mTxtHours = itemView.findViewById(R.id.txt_hours);
+            mTxtDistance = itemView.findViewById(R.id.txt_distance);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, mList.get(getAdapterPosition()),
+                    Toast.makeText(mContext, mList.get(getAdapterPosition()).getName(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
